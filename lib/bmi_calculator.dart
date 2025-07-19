@@ -8,6 +8,17 @@ class Bmi extends StatefulWidget {
 }
 
 class _BmiState extends State<Bmi> {
+  TextEditingController heightcontroller=TextEditingController();
+  TextEditingController weightcontroller=TextEditingController();
+  String textdata ="";
+  void bmicalc(){
+    double heights=double.parse(heightcontroller.text);
+    double weights=double.parse(weightcontroller.text);
+    double result=weights/(heights/100*heights/100);
+    setState(() {
+      textdata="Your BMI is ${result.toStringAsFixed(2)}";
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +53,7 @@ class _BmiState extends State<Bmi> {
                   child: Column(
                     children: [
                       SizedBox(height: 20),
-                      TextField(
+                      TextField(controller: heightcontroller,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.height),
                           fillColor: const Color.fromARGB(198, 255, 255, 255),
@@ -55,7 +66,7 @@ class _BmiState extends State<Bmi> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      TextField(
+                      TextField(controller: weightcontroller,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.monitor_weight),
                           fillColor: const Color.fromARGB(198, 255, 255, 255),
@@ -71,7 +82,7 @@ class _BmiState extends State<Bmi> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          height: 50,
+                          height: 55,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
@@ -79,11 +90,9 @@ class _BmiState extends State<Bmi> {
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Column(
-                            children: [
-                              SizedBox(height: 15),
+                          child: 
                               TextButton(onPressed: () {
-                                
+                                bmicalc();
                               },
                                 child: Text(
                                   "Calculate",
@@ -92,11 +101,11 @@ class _BmiState extends State<Bmi> {
                                     color: const Color.fromARGB(255, 15, 59, 95),
                                   ),
                                 ),
-                              ),
-                            ],
+                            
                           ),
                         ),
                       ),
+Text(textdata),
                     ],
                   ),
                 ),
